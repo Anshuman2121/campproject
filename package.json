@@ -1,0 +1,23 @@
+{
+  "name": "campproject",
+  "version": "1.0.0",
+  "description": "Camp Project with Node.JS",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anshuman2121/campproject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Anshuman2121/campproject/issues"
+  },
+  "homepage": "https://github.com/Anshuman2121/campproject#readme",
+  "dependencies": {
+    "ejs": "^2.6.2",
+    "express": "^4.17.1"
+  }
+}
