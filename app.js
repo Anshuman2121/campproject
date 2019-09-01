@@ -1,35 +1,81 @@
-var express = require("express");
-var app = express();
-var bodyparser = require("body-parser");
+var express = require("express"),
+    app = express(),
+    bodyparser = require("body-parser"),
+    mongoose = require("mongoose");
+
+mongoose.connect("mongodb+srv://Anshuman:Anshu2121@anshumancluster-uabpz.mongodb.net/camp?retryWrites=true&w=majority",{ useNewUrlParser: true })
 app.use(bodyparser.urlencoded({extended: true}));
 app.set("view engine","ejs");
-var campgrounds = [
-    {name:"Mountains Camp", image:"https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=60"},
-    {name:"Forest", image:"https://images.unsplash.com/photo-1537565266759-34bbc16be345?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=60"},
-    {name:"River Side Camp", image:"https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=60"}
-];
+
+//Schema Setup
+var campgroundSchema = new mongoose.Schema({
+    name : String,
+    image : String,
+    description: String
+});
+
+var campground = mongoose.model("campground", campgroundSchema);
+
+// campground.create({
+//     name : "Rishikesh",
+//     image : "http://www.rishikeshriverrafting.com/images/beach-camp-rishikesh/camping-rishikesh-beach.jpg",
+//     description: "This is a Rishikesh Camp"
+// }, function(err, camp){
+//     if(err){
+//         console.log(err);
+//     } else {
+//         console.log("added" + camp);
+//     }
+// })
+
 
 app.get("/", function(req, res){
     res.render("landing");
 });
 
 app.get("/campgrounds", function(req, res){
-    res.render("campgrounds",{campgrounds:campgrounds});
+    //res.render("campgrounds",{campgrounds:campgrounds});
+    //get data from db
+    campground.find({}, function(err,campgrounds){
+        if(err){
+            console.log(err);
+        } else{
+            res.render("index",{campgrounds:campgrounds});
+        }
+    })
 });
 
 app.post("/campgrounds", function(req, res){
     //get data from form and add to campgrounds
     var name = req.body.name;
     var image = req.body.image;
-    var newcamp = {name:name, image:image};
-    campgrounds.push(newcamp);
-    //redirrct to camp ground page
-    res.redirect("/campgrounds");
+    var desc = req.body.desc;
+    var newcamp = {name:name, image:image, description:desc};
+    //   campgrounds.push(newcamp);
+    //  add to database
+    campground.create(newcamp, function(err, newentry){
+        if(err){
+            console.log(err);
+        } else {
+            res.redirect("/campgrounds");
+        }
+    });
+    
 } );
 
 app.get("/campgrounds/new", function (req,res) {
     res.render("new");
-  });
+});
+
+app.get("/campgrounds/:id", function(req,res){
+    campground.findById(req.params.id, function(err, data){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("show",{data : data});
+        }
+    });
+});
 
 app.listen(80,function(){
     console.log("Camp Website has started");
