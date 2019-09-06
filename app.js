@@ -7,14 +7,7 @@ mongoose.connect("mongodb+srv://Anshuman:Anshu2121@anshumancluster-uabpz.mongodb
 app.use(bodyparser.urlencoded({extended: true}));
 app.set("view engine","ejs");
 
-//Schema Setup
-var campgroundSchema = new mongoose.Schema({
-    name : String,
-    image : String,
-    description: String
-});
 
-var campground = mongoose.model("campground", campgroundSchema);
 
 // campground.create({
 //     name : "Rishikesh",
