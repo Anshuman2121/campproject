@@ -1,0 +1,9 @@
+<% include ../partials/header %>
+<div >
+    <div style="align-items: center;display: flex;justify-content: center;"><h2><%= data.name %></h2></div>
+    <div style="align-items: center;display: flex;justify-content: center;"><img src="<%= data.image %>"></div>
+    <a class="btn btn-success" href="/campgrounds/<%= data._id %>/comments/new">Add New Comment</a>
+    <div style="align-items: center;display: flex;justify-content: center;"><p><%= data.description %></p></div>
+    <div style="align-items: center;display: flex;justify-content: center;"><% data.comment.forEach(function(comment){ %> <p><strong><%= comment.author %></strong> - <%=comment.text %></p><br> <% });%></div>
+</div>
+<% include ../partials/footer %>
