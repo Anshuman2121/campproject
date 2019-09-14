@@ -23,26 +23,26 @@ var data = [
 function seedDB(){
     campground.remove({}, function(err){
         console.log("removed campgrounds");
-    });
+    })};
 
-data.forEach(function(seed){
-    campground.create(seed, function(err, data1){
-        if(err){
-            console.log(err);
-        } else{
-            console.log(data1);
-            comment.create({
-                text: "This place is great",
-                author: "anshuman"
-            }, function(err, data){
-                console.log(data);
-                data1.comment.push(data);
-                data1.save();
-            });
-        }
-    });
-});
-};
+// data.forEach(function(seed){
+//     campground.create(seed, function(err, data1){
+//         if(err){
+//             console.log(err);
+//         } else{
+//             console.log(data1);
+//             comment.create({
+//                 text: "This place is great",
+//                 author: "anshuman"
+//             }, function(err, data){
+//                 console.log(data);
+//                 data1.comment.push(data);
+//                 data1.save();
+//             });
+//         }
+//     });
+// });
+// };
 
 
 

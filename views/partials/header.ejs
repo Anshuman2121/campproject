@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Camps</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="/stylesheet/main.css">
 </head>
 <body>
 
@@ -16,9 +16,13 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-end">
                   <ul class="navbar-nav ml-auto" >
-                    <li class="nav-item" style="width: 100px;"><a href="#">Login</a></li>
-                    <li class="nav-item" style="width: 100px;"><a href="#">SignUp</a></li>
-                    <li class="nav-item" style="width: 100px;"><a href="#">Logout</a></li>
+                    <% if(!currentUser){ %>
+                    <li class="nav-item" style="width: 100px;"><a href="/login">Login</a></li>
+                    <li class="nav-item" style="width: 100px;"><a href="/register">SignUp</a></li>
+                  <% } else { %>
+                    <li class="nav-item" style="width: 200px;"><a href="#">Signed In As <%= currentUser.username %></a></li>
+                    <li class="nav-item" style="width: 100px;"><a href="/logout">Logout</a></li>
+                    <% } %>
                     </ul>
                     </div>
               </nav>
