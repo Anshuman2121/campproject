@@ -2,6 +2,7 @@ var express     = require("express"),
     app         = express(),
     bodyparser  = require("body-parser"),
     mongoose    = require("mongoose"),
+    flash       = require("connect-flash"),
     campground  = require("./models/campground"),
     seedDB      = require("./seeds.js"),
     LocalStrategy = require("passport-local"),
@@ -23,6 +24,8 @@ app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 // seedDB();
 
+app.use(flash());
+
 //Passport Configuration
 app.use(require("express-session")({
     secret : "This is camp project",
@@ -37,6 +40,8 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next){
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
     res.locals.currentUser = req.user;
     next();
 });
@@ -45,6 +50,8 @@ app.use("/campgrounds",campgroundsRoute);
 app.use("/campgrounds/:id/comments",commentsRoute);  //important
 app.use("/",authRoute);
 
-app.listen(80,function(){
-    console.log("Camp Website has started");
-});
+// app.listen(80,function(){
+//     console.log("Camp Website has started");
+// });
+
+app.listen(process.env.PORT);

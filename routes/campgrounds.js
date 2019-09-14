@@ -4,7 +4,7 @@ var campground = require("../models/campground");
 var comment = require("../models/comments");
 var middleware = require("../middleware/index")
 
-router.get("/", middleware.isLoggedIn,function(req, res){
+router.get("/", function(req, res){
     //res.render("campgrounds",{campgrounds:campgrounds});
     //get data from db
     campground.find({}, function(err,campgrounds){
@@ -21,17 +21,19 @@ router.post("/", middleware.isLoggedIn,function(req, res){
     var name = req.body.name;
     var image = req.body.image;
     var desc = req.body.desc;
+    var price = req.body.price;
     var author = {
         id: req.user._id,
         username: req.user.username
     }
-    var newcamp = {name:name, image:image, description:desc, author: author};
+    var newcamp = {name:name, image:image, price:price, description:desc, author: author};
     //   campgrounds.push(newcamp);
     //  add to database
     campground.create(newcamp, function(err, newentry){
         if(err){
             console.log(err);
         } else {
+            req.flash("success", "Campground Added!");
             res.redirect("/campgrounds");
         }
     });
@@ -66,6 +68,7 @@ router.put("/:id", middleware.checkCampgroundOwnership,function(req, res){
         if(err){
             res.redirect("/campgrounds")
         } else {
+            req.flash("success", "Campgound Updated!");
             res.redirect("/campgrounds/" + req.params.id);
         }
     });
@@ -74,6 +77,7 @@ router.put("/:id", middleware.checkCampgroundOwnership,function(req, res){
 //Delete
 router.delete("/:id", middleware.checkCampgroundOwnership,function(req, res){
     campground.findByIdAndRemove(req.params.id, function(err){
+        req.flash("success", "Campground Deleted!");
         res.redirect("/campgrounds");
     });
 });

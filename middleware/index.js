@@ -14,12 +14,14 @@ middlewareObj.checkCampgroundOwnership = function(req, res, next){
                 if(data.author.id.equals(req.user._id)){
                         next();
                 } else{
+                    req.flash("error", "You do not have permission to do that!");
                     res.redirect("back");
                 }
                     
                 }
             });
         } else {
+            req.flash("error", "You need to be logged in to do that");
             res.redirect("back");  //goes one step back
         }  
 }
@@ -41,6 +43,7 @@ middlewareObj.checkCommentsOwnership = function (req, res, next){
             }
         });
     } else {
+        req.flash("error", "You need to be logged in to do that");
         res.redirect("back");  //goes one step back
     }  
 }
@@ -49,6 +52,7 @@ middlewareObj.isLoggedIn = function (req, res, next){
     if(req.isAuthenticated()){
         return next();
     } else {
+        req.flash("error", "You need to be logged in to do that");
         res.redirect("/login");
     }
 }

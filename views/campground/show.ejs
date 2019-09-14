@@ -6,14 +6,14 @@
             <div class="list-group">
                 <li class="list-group-item">Info 1</li>
                 <li class="list-group-item">Info 2</li>
-                <li class="list-group-item">Info 2</li>
+                <li class="list-group-item">Info 3</li>
             </div>
         </div>
         <div class="col-md-9">
             <div class="img-thumbnail">
                 <img class="img-fluid" src="<%= data.image %>">
                 <div class="caption-full">
-                    <h4 class="float-right">Rs 1000/per Night</h4>
+                    <h6 style="color:darkgreen " class="float-right">₹<%= data.price %> per Night</h6>
                     <h4><a href="/campgrounds/<%= data._id %>/comments/new"><%= data.name %></a></h4>
                     <p><%= data.description %></p>
                     <p>
